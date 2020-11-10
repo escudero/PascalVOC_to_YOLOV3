@@ -3,13 +3,6 @@ import os
 from glob import glob
 import sys, getopt
 
-foldername = os.path.basename(os.getcwd())
-if foldername == "tools": os.chdir("..")
-
-
-xml_path = 'model_data\\Annotations'
-yolo_file = "model_data\\futebol_train.txt"
-names_file = "model_data\\futebol_names.txt"
 
 names = []
 
