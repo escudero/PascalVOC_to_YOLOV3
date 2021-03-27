@@ -41,14 +41,14 @@ def run_PascalVOC_to_YOLOV3(pascalvoc_path, yolo_file, names_file):
 if __name__ == '__main__':
     argv = sys.argv[1:]
     try:
-        opts, args = getopt.getopt(argv, 'h', ['pascalvocpath=', 'yolofile=', 'namesfile='])
+        opts, args = getopt.getopt(argv, 'h', ['pascalvocpath=', 'yolofile=', 'namesfile=', 'prenames='])
     except getopt.GetoptError:
-        print('PascalVOC_to_YOLOV3.py --pascalvocpath <pascalvocpath> --yolofile <yolofile> --namesfile <namesfile>')
+        print('PascalVOC_to_YOLOV3.py --pascalvocpath <pascalvocpath> --yolofile <yolofile> --namesfile <namesfile> --prenames <prenames>')
         sys.exit(2)
-    pascalvoc_path, yolo_file, names_file = [None, None, None]
+    pascalvoc_path, yolo_file, names_file, pre_names = [None, None, None, None]
     for opt, arg in opts:
         if opt == '-h':
-            print('PascalVOC_to_YOLOV3.py --pascalvocpath <pascalvocpath> --yolofile <yolofile> --namesfile <namesfile>')
+            print('PascalVOC_to_YOLOV3.py --pascalvocpath <pascalvocpath> --yolofile <yolofile> --namesfile <namesfile> --prenames <prenames>')
             sys.exit()
         elif opt in ("--pascalvocpath"):
             pascalvoc_path = arg
@@ -56,10 +56,14 @@ if __name__ == '__main__':
             yolo_file = arg
         elif opt in ("--namesfile"):
             names_file = arg
+        elif opt in ("--prenames"):
+            pre_names = arg
     if None in [pascalvoc_path, yolo_file, names_file]:
-        print('PascalVOC_to_YOLOV3.py --pascalvocpath <pascalvocpath> --yolofile <yolofile> --namesfile <namesfile>')
+        print('PascalVOC_to_YOLOV3.py --pascalvocpath <pascalvocpath> --yolofile <yolofile> --namesfile <namesfile> --prenames <prenames>')
         sys.exit()
+    if pre_names is not None:
+        names = pre_names.split(',')
+    else:
+        names = []
 
     run_PascalVOC_to_YOLOV3(pascalvoc_path, yolo_file, names_file)
-
-    
