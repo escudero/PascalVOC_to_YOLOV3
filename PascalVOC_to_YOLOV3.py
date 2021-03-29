@@ -5,6 +5,7 @@ import sys, getopt
 
 
 names = []
+onlynames = False
 
 def ParseXML(pascalvoc_path, filenames, file):
     global names
@@ -18,6 +19,8 @@ def ParseXML(pascalvoc_path, filenames, file):
         for i, obj in enumerate(root.iter('object')):
             klass_name = obj.find('name').text
             if klass_name not in names:
+                if onlynames:
+                    continue
                 names.append(klass_name)
             klass_id = names.index(klass_name)
             xmlbox = obj.find('bndbox')
@@ -70,7 +73,9 @@ if __name__ == '__main__':
         sys.exit()
     if pre_names is not None:
         names = pre_names.split(',')
+        onlynames = True
     else:
         names = []
+        onlynames = False
 
     run_PascalVOC_to_YOLOV3(pascalvoc_path, sets_file, yolo_file, names_file)
